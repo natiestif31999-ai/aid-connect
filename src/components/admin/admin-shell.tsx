@@ -7,6 +7,7 @@ import { useState } from "react";
 import { useTheme } from "next-themes";
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
+import { AdminBreadcrumbs } from "@/components/admin/breadcrumbs";
 import {
   LayoutDashboard,
   Settings2,
@@ -16,15 +17,36 @@ import {
   MessageCircle,
   ChevronDown,
   LogOut,
+  Sparkles,
+  Layers,
+  FileText,
 } from "lucide-react";
 
-const navItems = [
-  { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/admin/campaigns", label: "Donations", icon: CreditCard },
-  { href: "/admin/inventory", label: "Inventory", icon: Package },
-  { href: "/admin/users", label: "Users", icon: Users2 },
-  { href: "/admin/content", label: "Content", icon: MessageCircle },
-  { href: "/admin/settings", label: "Settings", icon: Settings2 },
+const navSections = [
+  {
+    label: "Core",
+    items: [
+      { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
+      { href: "/admin/settings", label: "Settings", icon: Settings2 },
+      { href: "/admin/theme", label: "Theme", icon: Sparkles },
+    ],
+  },
+  {
+    label: "Content",
+    items: [
+      { href: "/admin/content", label: "Content hub", icon: Layers },
+      { href: "/admin/pages", label: "Pages", icon: FileText },
+      { href: "/admin/posts", label: "Posts", icon: MessageCircle },
+    ],
+  },
+  {
+    label: "Operations",
+    items: [
+      { href: "/admin/campaigns", label: "Donations", icon: CreditCard },
+      { href: "/admin/inventory", label: "Inventory", icon: Package },
+      { href: "/admin/users", label: "Users", icon: Users2 },
+    ],
+  },
 ];
 
 export function AdminShell({ children }: { children: React.ReactNode }) {
@@ -63,29 +85,35 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
               <ChevronDown className={menuOpen ? "rotate-180 transition" : "transition"} size={18} />
             </button>
           </div>
-          <nav
-            className={`mt-8 grid gap-2 transition-all md:block ${menuOpen ? "block" : "hidden"}`}
-            aria-label="Admin navigation"
-          >
-            {navItems.map((item) => {
-              const Icon = item.icon;
-              const active = pathname === item.href;
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={
-                    "flex items-center gap-3 rounded-3xl px-4 py-3 text-sm font-medium transition " +
-                    (active
-                      ? "bg-slate-900 text-white shadow-lg shadow-slate-900/30"
-                      : "text-slate-400 hover:bg-slate-900/70 hover:text-white")
-                  }
-                >
-                  <Icon className="h-4 w-4" />
-                  <span>{item.label}</span>
-                </Link>
-              );
-            })}
+          <nav className={`mt-8 transition-all md:block ${menuOpen ? "block" : "hidden"}`} aria-label="Admin navigation">
+            {navSections.map((section) => (
+              <div key={section.label} className="mb-6">
+                <p className="px-4 pb-2 text-xs uppercase tracking-[0.3em] text-slate-500">
+                  {section.label}
+                </p>
+                <div className="grid gap-2">
+                  {section.items.map((item) => {
+                    const Icon = item.icon;
+                    const active = pathname === item.href;
+                    return (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        className={
+                          "flex items-center gap-3 rounded-3xl px-4 py-3 text-sm font-medium transition " +
+                          (active
+                            ? "bg-slate-900 text-white shadow-lg shadow-slate-900/30"
+                            : "text-slate-400 hover:bg-slate-900/70 hover:text-white")
+                        }
+                      >
+                        <Icon className="h-4 w-4" />
+                        <span>{item.label}</span>
+                      </Link>
+                    );
+                  })}
+                </div>
+              </div>
+            ))}
           </nav>
           <div className="mt-8 rounded-3xl border border-slate-800/80 bg-slate-900/90 p-5">
             <div className="flex items-center justify-between gap-3 text-sm text-slate-400">
@@ -115,16 +143,14 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
 
         <main className="flex-1 bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
           <div className="border-b border-slate-200/70 bg-white/90 px-4 py-4 shadow-sm shadow-slate-900/5 backdrop-blur-md dark:border-slate-800/80 dark:bg-slate-950/95 md:px-6 md:py-5">
+            <AdminBreadcrumbs />
             <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
               <div>
                 <p className="text-sm uppercase tracking-[0.24em] text-slate-500">Welcome back</p>
                 <h1 className="text-2xl font-semibold text-slate-950 dark:text-white">ERP Control Center</h1>
               </div>
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-                <Button
-                  variant="secondary"
-                  onClick={() => router.push("/admin/settings")}
-                >
+                <Button variant="secondary" onClick={() => router.push("/admin/settings")}> 
                   <Settings2 className="mr-2 h-4 w-4" />
                   Settings
                 </Button>

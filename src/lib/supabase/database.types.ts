@@ -154,7 +154,7 @@ export interface Database {
           seo_description: string | null;
           created_at: string;
           updated_at: string | null;
-          author_id: string;
+          author_id: string | null;
         };
         Insert: {
           id?: string;
@@ -167,7 +167,7 @@ export interface Database {
           seo_description?: string | null;
           created_at?: string;
           updated_at?: string | null;
-          author_id: string;
+          author_id?: string | null;
         };
         Update: {
           title?: string;
@@ -179,7 +179,7 @@ export interface Database {
           seo_description?: string | null;
           created_at?: string;
           updated_at?: string | null;
-          author_id?: string;
+          author_id?: string | null;
         };
       };
       posts: {
@@ -192,7 +192,7 @@ export interface Database {
           cover_url: string | null;
           status: "draft" | "published";
           category_id: string | null;
-          author_id: string;
+          author_id: string | null;
           published_at: string | null;
           created_at: string;
           updated_at: string | null;
@@ -261,7 +261,7 @@ export interface Database {
           cover_url: string | null;
           created_at: string;
           updated_at: string | null;
-          created_by: string;
+          created_by: string | null;
         };
         Insert: {
           id?: string;
@@ -276,7 +276,7 @@ export interface Database {
           cover_url?: string | null;
           created_at?: string;
           updated_at?: string | null;
-          created_by: string;
+          created_by?: string | null;
         };
         Update: {
           title?: string;
@@ -290,7 +290,7 @@ export interface Database {
           cover_url?: string | null;
           created_at?: string;
           updated_at?: string | null;
-          created_by?: string;
+          created_by?: string | null;
         };
       };
       donations: {

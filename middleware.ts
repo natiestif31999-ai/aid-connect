@@ -13,7 +13,7 @@ export async function middleware(req: NextRequest) {
     return res;
   }
 
-  const cookieStore = await cookies();
+  const cookieStore = cookies();
   const supabase = createServerClient<Database>(
     supabaseUrl,
     supabaseKey,

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
+import { ThemeSettingsProvider } from "@/components/theme-settings-provider";
 import { AppToaster } from "@/components/ui/toaster";
 
 const geistSans = Geist({
@@ -32,7 +33,7 @@ export default function RootLayout({
     >
       <body className="min-h-full bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          {children}
+          <ThemeSettingsProvider>{children}</ThemeSettingsProvider>
           <AppToaster />
         </ThemeProvider>
       </body>
